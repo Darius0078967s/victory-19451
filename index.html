@@ -3,42 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1941-1945 | Великая Победа</title>
+    <title>1941-1945 | Летопись Великой Победы</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
-        :root { --red: #bc0000; --black: #0a0a0a; --white: #f4f4f4; }
-        body { background-color: var(--black); color: var(--white); font-family: 'Georgia', serif; overflow-x: hidden; }
-        
-        .img-container { background: #1a1a1a; position: relative; overflow: hidden; border: 1px solid #333; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; opacity: 0.8; }
-        .img-container:hover img { transform: scale(1.05); opacity: 1; }
-        
-        .hero { 
-            height: 100vh; 
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-            url('https://encyclopedia.mil.ru/files/memory/znami_pobedi.jpg') center/cover no-repeat;
-            display: flex; align-items: center; justify-content: center; text-align: center; border-bottom: 8px solid var(--red);
+        :root { 
+            --red: #cc0000; 
+            --black: #000000; 
+            --white: #ffffff; 
+            --dark-gray: #121212;
         }
 
-        .section-header { border-left: 8px solid var(--red); padding-left: 20px; margin-bottom: 40px; text-transform: uppercase; }
-        
-        .hero-card { 
-            background: #111; border: 1px solid #222; transition: 0.4s; height: 100%; position: relative;
+        body { 
+            background-color: var(--black); 
+            color: var(--white); 
+            font-family: 'Times New Roman', serif; /* Более строгий исторический стиль */
+            overflow-x: hidden;
         }
-        .hero-card:hover { border-color: var(--red); transform: translateY(-10px); background: #1a0000; }
-        .hero-info { max-height: 0; overflow: hidden; transition: 0.5s; opacity: 0; }
-        .hero-card:hover .hero-info { max-height: 200px; opacity: 1; margin-top: 15px; }
 
-        .stat-box { border: 2px solid var(--red); padding: 30px; text-align: center; background: rgba(188, 0, 0, 0.05); }
-        .counter { font-size: 3.5rem; font-weight: bold; color: var(--red); display: block; }
+        /* Исправление вылетающих цифр на мобильных */
+        .stat-box { 
+            border: 2px solid var(--red); 
+            padding: 20px 10px; 
+            text-align: center; 
+            background: rgba(204, 0, 0, 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .counter { 
+            font-size: calc(1.8rem + 1.5vw); /* Адаптивный размер шрифта */
+            font-weight: 900; 
+            color: var(--red); 
+            line-height: 1;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 576px) {
+            .counter { font-size: 1.5rem; } /* Принудительное уменьшение на самых малых экранах */
+            .stat-label { font-size: 0.7rem; }
+        }
+
+        /* Защита картинок */
+        .img-wrapper {
+            background: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--red);
+            height: 250px;
+        }
         
-        .timeline-box { border-left: 2px solid var(--red); padding-left: 30px; position: relative; margin-bottom: 50px; }
-        .timeline-box::before { content: "★"; position: absolute; left: -12px; top: 0; color: var(--red); background: var(--black); font-size: 20px; }
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(120%);
+            transition: 0.5s;
+        }
 
-        .btn-main { background: var(--red); color: white; border: none; padding: 15px 40px; font-weight: bold; border-radius: 0; transition: 0.3s; }
-        .btn-main:hover { background: white; color: var(--red); }
+        .img-wrapper:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* Секция Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), var(--black)),
+                        url('https://images.unsplash.com/photo-1599423300746-b62533397364?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 10px solid var(--red);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-transform: uppercase;
+            border-left: 10px solid var(--red);
+            padding-left: 20px;
+            margin-bottom: 50px;
+            font-weight: 900;
+        }
+
+        .history-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            text-align: justify;
+        }
+
+        .hero-card {
+            background: var(--dark-gray);
+            border: 1px solid #333;
+            transition: 0.3s;
+            height: 100%;
+        }
+
+        .hero-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 20px rgba(204, 0, 0, 0.3);
+        }
+
+        /* Декоративная лента */
+        .st-george-ribbon {
+            height: 12px;
+            background: repeating-linear-gradient(90deg, #000, #000 20px, #ff8c00 20px, #ff8c00 40px);
+        }
     </style>
 </head>
 <body>
@@ -49,8 +127,8 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="nav">
             <ul class="navbar-nav ms-auto text-uppercase small">
-                <li class="nav-item"><a class="nav-link" href="#timeline">Хронология</a></li>
-                <li class="nav-item"><a class="nav-link" href="#heroes">Герои</a></li>
+                <li class="nav-item"><a class="nav-link" href="#main-history">История</a></li>
+                <li class="nav-item"><a class="nav-link" href="#stats">Цифры</a></li>
                 <li class="nav-item"><a class="nav-link text-danger fw-bold" href="blockada.html">Блокада</a></li>
                 <li class="nav-item"><a class="nav-link text-danger fw-bold" href="berlin.html">Берлин</a></li>
             </ul>
@@ -58,140 +136,96 @@
     </div>
 </nav>
 
-<header class="hero">
-    <div class="container" data-aos="fade-up">
+<section class="hero">
+    <div class="container text-center" data-aos="zoom-out">
         <h1 class="display-1 fw-bold">ВЕЛИКАЯ <span class="text-danger">ПОБЕДА</span></h1>
-        <p class="lead mb-5 fs-3">История подвига советского народа, изменившего мир.</p>
-        <a href="#events" class="btn-main">ЧИТАТЬ ДАЛЕЕ</a>
+        <p class="lead fs-2 mb-5">1418 ДНЕЙ И НОЧЕЙ БЕССМЕРТИЯ</p>
+        <div class="st-george-ribbon mb-5"></div>
+        <a href="#main-history" class="btn btn-danger btn-lg rounded-0 px-5 py-3 fw-bold">ВОЙТИ В ИСТОРИЮ</a>
     </div>
-</header>
+</section>
 
-<section id="stats" class="py-5 bg-white text-black">
+<section id="main-history" class="py-5 container">
+    <div class="row g-5">
+        <div class="col-lg-7" data-aos="fade-right">
+            <h2 class="section-title">Величие Подвига</h2>
+            <p class="history-text">Великая Отечественная война стала самым тяжелым испытанием для народов СССР. Это была война не просто за территории, а за само право нашего народа на существование. Согласно плану «Ост», большая часть населения подлежала уничтожению или превращению в рабов.</p>
+            <p class="history-text">От героической обороны Брестской крепости в июне 1941-го до триумфального водружения Знамени Победы над Рейхстагом в мае 1945-го — каждый шаг давался ценой невероятных усилий. Это история о том, как вчерашние школьники становились героями, а заводы за недели разворачивались в чистом поле под открытым небом, чтобы давать фронту танки и самолеты.</p>
+        </div>
+        <div class="col-lg-5" data-aos="fade-left">
+            <div class="img-wrapper shadow-lg">
+                <img src="https://images.unsplash.com/photo-1584281722572-6893630f9294?q=80&w=1000&auto=format&fit=crop" alt="Мемориал">
+            </div>
+            <p class="small text-muted mt-2 fst-italic">«Никто не забыт, ничто не забыто» — девиз, ставший клятвой для поколений.</p>
+        </div>
+    </div>
+</section>
+
+<section id="stats" class="py-5" style="background: #080808;">
     <div class="container">
-        <div class="row g-4">
-            <div class="col-md-3 col-6" data-aos="zoom-in">
+        <div class="row g-3">
+            <div class="col-lg-3 col-6" data-aos="flip-up">
                 <div class="stat-box">
                     <span class="counter" data-target="1418">0</span>
-                    <span class="fw-bold text-uppercase">дней войны</span>
+                    <span class="stat-label fw-bold text-uppercase mt-2">дней длилась война</span>
                 </div>
             </div>
-            <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="col-lg-3 col-6" data-aos="flip-up" data-aos-delay="100">
                 <div class="stat-box">
-                    <span class="counter" data-target="27000000">0</span>
-                    <span class="fw-bold text-uppercase">погибших</span>
+                    <span class="counter" data-target="26600000">0</span>
+                    <span class="stat-label fw-bold text-uppercase mt-2">общие потери людей</span>
                 </div>
             </div>
-            <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="200">
+            <div class="col-lg-3 col-6" data-aos="flip-up" data-aos-delay="200">
                 <div class="stat-box">
                     <span class="counter" data-target="11657">0</span>
-                    <span class="fw-bold text-uppercase">героев СССР</span>
+                    <span class="stat-label fw-bold text-uppercase mt-2">Героев Советского Союза</span>
                 </div>
             </div>
-            <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="300">
+            <div class="col-lg-3 col-6" data-aos="flip-up" data-aos-delay="300">
                 <div class="stat-box">
                     <span class="counter" data-target="1710">0</span>
-                    <span class="fw-bold text-uppercase">городов стерто</span>
+                    <span class="stat-label fw-bold text-uppercase mt-2">разрушенных городов</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="timeline" class="py-5 container">
-    <h2 class="section-header">Хронология событий</h2>
-    <div class="row">
-        <div class="col-lg-10 mx-auto">
-            <div class="timeline-box" data-aos="fade-left">
-                <h3 class="text-danger">22 Июня 1941 — Начало</h3>
-                <p>В 04:00 утра нацистская Германия напала на СССР. Началась оборона Брестской крепости. Первый день войны унес тысячи жизней, а страна перешла на военные рельсы под лозунгом «Всё для фронта, всё для победы!».</p>
-            </div>
-            <div class="timeline-box" data-aos="fade-left">
-                <h3 class="text-danger">Сентябрь 1941 — Осада Ленинграда</h3>
-                <p>Начало 872-дневной блокады города. Гитлер планировал стереть Ленинград с лица земли, но город выстоял, став символом мирового мужества.</p>
-            </div>
-            <div class="timeline-box" data-aos="fade-left">
-                <h3 class="text-danger">Декабрь 1941 — Битва под Москвой</h3>
-                <p>Контрнаступление советских войск отбросило врага от столицы. Миф о непобедимости вермахта был официально развеян.</p>
-            </div>
-            <div class="timeline-box" data-aos="fade-left">
-                <h3 class="text-danger">Февраль 1943 — Сталинград</h3>
-                <p>Завершение величайшего сражения в истории человечества. Окружена и уничтожена 6-я армия Паулюса. Начало коренного перелома.</p>
-            </div>
-            <div class="timeline-box" data-aos="fade-left">
-                <h3 class="text-danger">Май 1945 — Берлин</h3>
-                <p>Красная Армия берет логово врага. Подписание акта капитуляции и первый Парад Победы.</p>
+<section class="py-5 container">
+    <h2 class="section-title">Герои и Полководцы</h2>
+    <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up">
+            <div class="hero-card">
+                <div class="img-wrapper">
+                    <img src="https://static.tildacdn.com/tild6139-6535-4364-b733-663836376562/original.jpg" alt="Жуков">
+                </div>
+                <div class="p-4">
+                    <h4 class="text-danger fw-bold">Г.К. Жуков</h4>
+                    <p class="small">Четырежды Герой Советского Союза. Человек, которому Сталин доверил принимать Парад Победы. Его имя наводило ужас на генералов Вермахта.</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
-<section id="heroes" class="py-5 bg-dark">
-    <div class="container">
-        <h2 class="section-header">Герои войны</h2>
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6" data-aos="flip-left">
-                <div class="hero-card p-3">
-                    <div class="img-container mb-3" style="height: 300px;">
-                        <img src="https://encyclopedia.mil.ru/files/marshals/Zhukov_G_K.jpg" alt="Жуков">
-                    </div>
-                    <h4 class="text-danger">Георгий Жуков</h4>
-                    <p class="small text-white-50">Маршал Советского Союза</p>
-                    <div class="hero-info">
-                        «Маршал Победы». Под его командованием были выиграны ключевые битвы, включая штурм Берлина.
-                    </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="hero-card">
+                <div class="img-wrapper">
+                    <img src="https://static.tildacdn.com/tild3532-3431-4033-a364-323861633538/original.jpg" alt="Рокоссовский">
+                </div>
+                <div class="p-4">
+                    <h4 class="text-danger fw-bold">К.К. Рокоссовский</h4>
+                    <p class="small">Мастер стратегии. Его план «Багратион» привел к полному разгрому группы армий «Центр» и освобождению всей территории СССР.</p>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" data-aos="flip-left" data-aos-delay="100">
-                <div class="hero-card p-3">
-                    <div class="img-container mb-3" style="height: 300px;">
-                        <img src="https://encyclopedia.mil.ru/files/marshals/Rokossovsky_K_K.jpg" alt="Рокоссовский">
-                    </div>
-                    <h4 class="text-danger">К. Рокоссовский</h4>
-                    <p class="small text-white-50">Маршал СССР и Польши</p>
-                    <div class="hero-info">
-                        Один из величайших тактиков. Автор плана операции «Багратион», освободившей Белоруссию.
-                    </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="hero-card">
+                <div class="img-wrapper">
+                    <img src="https://static.tildacdn.com/tild3164-3564-4139-b230-666336306566/original.jpg" alt="Герой">
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6" data-aos="flip-left" data-aos-delay="200">
-                <div class="hero-card p-3">
-                    <div class="img-container mb-3" style="height: 300px;">
-                        <img src="https://encyclopedia.mil.ru/files/heroes/Kosmodemyanskaya_Zoya.jpg" alt="Зоя">
-                    </div>
-                    <h4 class="text-danger">Зоя Космодемьянская</h4>
-                    <p class="small text-white-50">Партизанка</p>
-                    <div class="hero-info">
-                        Первая женщина — Герой СССР во время войны. Её стойкость перед казнью вдохновляла миллионы бойцов.
-                    </div>
+                <div class="p-4">
+                    <h4 class="text-danger fw-bold">Александр Матросов</h4>
+                    <p class="small">Символ самопожертвования. Закрыл собой амбразуру вражеского дзота, обеспечив успех наступления своего подразделения.</p>
                 </div>
-            </div>
-            </div>
-    </div>
-</section>
-
-<section id="events" class="py-5">
-    <div class="container text-center">
-        <h2 class="section-header d-inline-block">Ключевые операции</h2>
-        <div class="row mt-5 g-4">
-            <div class="col-md-6">
-                <a href="blockada.html" class="text-decoration-none text-white">
-                    <div class="p-5 border border-danger hover-bg-red" style="background: url('https://encyclopedia.mil.ru/files/memory/blockada_hleb.jpg') center/cover;">
-                        <div class="bg-black bg-opacity-75 p-4">
-                            <h2>БЛОКАДА ЛЕНИНГРАДА</h2>
-                            <p>Узнать подробнее о 900 днях ада и героизма</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-6">
-                <a href="berlin.html" class="text-decoration-none text-white">
-                    <div class="p-5 border border-danger" style="background: url('https://encyclopedia.mil.ru/files/memory/berlin_shturm.jpg') center/cover;">
-                        <div class="bg-black bg-opacity-75 p-4">
-                            <h2>БИТВА ЗА БЕРЛИН</h2>
-                            <p>История финального штурма логова врага</p>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
     </div>
@@ -199,30 +233,47 @@
 
 <footer class="bg-black border-top border-danger py-5 text-center mt-5">
     <div class="container">
-        <h2 class="text-danger fw-bold">1941 - 1945</h2>
-        <p>Никто не забыт, ничто не забыто.</p>
-        <div class="ribbon mx-auto" style="height: 10px; width: 200px; background: repeating-linear-gradient(90deg, #000, #000 20px, #ff8c00 20px, #ff8c00 40px);"></div>
+        <h2 class="text-danger fw-bold mb-3">1941 - 1945</h2>
+        <p class="text-white-50">Вечная слава героям, павшим за свободу нашей Родины.</p>
+        <div class="st-george-ribbon mx-auto" style="max-width: 300px;"></div>
     </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init();
-    // Анимация цифр
+    AOS.init({ duration: 1000, once: true });
+
+    // Улучшенный скрипт счетчика
     const counters = document.querySelectorAll('.counter');
-    counters.forEach(counter => {
-        const updateCount = () => {
-            const target = +counter.getAttribute('data-target');
-            const count = +counter.innerText;
-            const inc = target / 100;
-            if (count < target) {
-                counter.innerText = Math.ceil(count + inc);
-                setTimeout(updateCount, 20);
-            } else { counter.innerText = target.toLocaleString('ru-RU'); }
-        };
-        updateCount();
-    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; 
+                const startTime = performance.now();
+
+                const update = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const currentCount = Math.floor(progress * target);
+                    
+                    counter.innerText = currentCount.toLocaleString('ru-RU');
+
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.innerText = target.toLocaleString('ru-RU');
+                    }
+                };
+                requestAnimationFrame(update);
+                observer.unobserve(counter);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => observer.observe(c));
 </script>
 </body>
 </html>
